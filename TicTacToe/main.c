@@ -17,7 +17,6 @@ int main()
     char posArr[] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
     displayBoard(posArr);
     char ch;
-    bool isADraw;
 
     while(true)
     {
@@ -32,14 +31,12 @@ int main()
 
         displayBoard(posArr);
 
-        isADraw = drawGame(posArr);
-
         if (displayWinner(revealWinner(posArr)))
         {
             break;
         }
 
-        if (isADraw)
+        if (drawGame(posArr))
         {
             printf("Game is a draw.\n");
             break;
