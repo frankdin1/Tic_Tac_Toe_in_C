@@ -10,7 +10,7 @@ char playerTurn(bool trueOrfalse);
 char revealWinner(char arr[]);
 bool displayWinner(char c);
 void alreadyTaken(char arr[], char c, int n);
-
+bool drawGame(char arr[]);
 
 int main()
 {
@@ -19,6 +19,7 @@ int main()
     bool playerOneTurn = true;
     char ch;
     bool winnerRevealed;
+    bool isADraw;
 
     while(true)
     {
@@ -36,22 +37,19 @@ int main()
         playerOneTurn = !playerOneTurn;
 
         winner = revealWinner(posArr);
+        isADraw = drawGame(posArr);
         winnerRevealed =  displayWinner(winner);
+
         if (winnerRevealed)
         {
             break;
         }
-        /*
-        if (winner == 'X')
+
+        if (isADraw)
         {
-            printf("Player 1 wins\n");
+            printf("Game is a draw.\n");
             break;
         }
-        else if (winner == 'O')
-        {
-            printf("Player 2 wins\n");
-            break;
-        }*/
     }
 
     return 0;
@@ -168,4 +166,19 @@ void alreadyTaken(char arr[], char ch, int choice)
                 scanf("%d", &choice);
             arr[choice-1] = ch;
         }
+}
+
+bool drawGame(char arr[])
+{
+    bool isADraw = true;
+    for (int i = 0; i < 9; i++)
+    {
+        if (arr[i] != 'X' && arr[i] != 'O')
+        {
+            printf("Pos %d: %c\n",i+1, arr[i]);
+            isADraw = false;
+            break;
+        }
+    }
+    return isADraw;
 }

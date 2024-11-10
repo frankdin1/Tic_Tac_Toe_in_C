@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1731274751 source:c:\programming\c\tim bukalcha - jason fedin teaching\tic_tac_toe_in_c\tictactoe\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
