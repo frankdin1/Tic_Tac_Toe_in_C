@@ -6,7 +6,8 @@
 #include <stdbool.h>
 
 void displayBoard(char a[]);
-char playerTurn(bool trueOrfalse);
+//char playerTurn(bool trueOrfalse);
+char playerTurn();
 char revealWinner(char arr[]);
 bool displayWinner(char c);
 void alreadyTaken(char arr[], char c, int n);
@@ -16,7 +17,6 @@ int main()
 {
     char posArr[] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
     displayBoard(posArr);
-    bool playerOneTurn = true;
     char ch;
     bool winnerRevealed;
     bool isADraw;
@@ -26,7 +26,7 @@ int main()
         int choice;
         char winner;
 
-        ch = playerTurn(playerOneTurn);
+        ch = playerTurn();//determine what mark ('X' or 'O') will be placed on the board based on whose turn it is
         scanf("%d", &choice);
 
         alreadyTaken(posArr, ch, choice);
@@ -34,7 +34,6 @@ int main()
         system("clear");
 
         displayBoard(posArr);
-        playerOneTurn = !playerOneTurn;
 
         winner = revealWinner(posArr);
         isADraw = drawGame(posArr);
@@ -78,8 +77,9 @@ void displayBoard(char arr[])
 }
 
 //Function to switch player turns
-char playerTurn(bool firstPlayerTurn)
+char playerTurn()
 {
+    static bool firstPlayerTurn = true;
     char c;
     if (firstPlayerTurn)
     {
@@ -91,6 +91,7 @@ char playerTurn(bool firstPlayerTurn)
         printf("Player 2, pick a number: ");
         c = 'O';
     }
+    firstPlayerTurn = !firstPlayerTurn;
     return c;
 }
 
@@ -168,6 +169,7 @@ void alreadyTaken(char arr[], char ch, int choice)
         }
 }
 
+//Function to determine a draw game
 bool drawGame(char arr[])
 {
     bool isADraw = true;
