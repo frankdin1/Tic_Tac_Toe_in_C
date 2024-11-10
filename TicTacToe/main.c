@@ -8,7 +8,9 @@
 void displayBoard(char a[]);
 char playerTurn(bool trueOrfalse);
 char revealWinner(char arr[]);
+bool displayWinner(char c);
 void alreadyTaken(char arr[], char c, int n);
+
 
 int main()
 {
@@ -16,6 +18,7 @@ int main()
     displayBoard(posArr);
     bool playerOneTurn = true;
     char ch;
+    bool winnerRevealed;
 
     while(true)
     {
@@ -24,12 +27,21 @@ int main()
 
         ch = playerTurn(playerOneTurn);
         scanf("%d", &choice);
+
         alreadyTaken(posArr, ch, choice);
+
         system("clear");
+
         displayBoard(posArr);
         playerOneTurn = !playerOneTurn;
 
         winner = revealWinner(posArr);
+        winnerRevealed =  displayWinner(winner);
+        if (winnerRevealed)
+        {
+            break;
+        }
+        /*
         if (winner == 'X')
         {
             printf("Player 1 wins\n");
@@ -39,7 +51,7 @@ int main()
         {
             printf("Player 2 wins\n");
             break;
-        }
+        }*/
     }
 
     return 0;
@@ -125,6 +137,23 @@ char revealWinner(char arr[])
         winningChar = arr[6];
     }
     return winningChar;
+}
+
+//Function to display winner
+bool displayWinner(char w)
+{
+    bool weHaveAWinner = false;
+    if (w == 'X')
+    {
+        printf("Player 1 wins\n");
+        weHaveAWinner = true;
+    }
+    else if (w == 'O')
+    {
+        printf("Player 2 wins\n");
+        weHaveAWinner = true;
+    }
+    return weHaveAWinner;
 }
 
 //Function to stop players from marking a spot that was already marked
