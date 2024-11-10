@@ -7,7 +7,7 @@
 
 void displayBoard(char a[]);
 char playerTurn(bool trueOrfalse);
-bool showWinner(char arr[]);
+char revealWinner(char arr[]);
 
 int main()
 {
@@ -20,7 +20,7 @@ int main()
     while(true)
     {
         int choice;
-        bool weHaveAWinner;
+        char winner;
 
         ch = playerTurn(playerOneTurn);
         scanf("%d", &choice);
@@ -37,24 +37,17 @@ int main()
         displayBoard(posArr);
         playerOneTurn = !playerOneTurn;
 
-        weHaveAWinner = showWinner(posArr);
-        if (weHaveAWinner)
-            break;
-        /*if(
-            posArr[0] == posArr[1] && posArr[0] == posArr[2] ||
-            posArr[3] == posArr[4] && posArr[3] == posArr[5] ||
-            posArr[6] == posArr[7] && posArr[6] == posArr[8] ||
-            posArr[0] == posArr[3] && posArr[0] == posArr[6] ||
-            posArr[1] == posArr[4] && posArr[1] == posArr[7] ||
-            posArr[2] == posArr[5] && posArr[2] == posArr[8] ||
-            posArr[0] == posArr[4] && posArr[0] == posArr[8] ||
-            posArr[2] == posArr[4] && posArr[2] == posArr[6]
-            )
+        winner = revealWinner(posArr);
+        if (winner == 'X')
         {
-            printf("Winner");
+            printf("Player 1 wins\n");
             break;
-        }*/
-
+        }
+        else if (winner == 'O')
+        {
+            printf("Player 2 wins\n");
+            break;
+        }
     }
 
     return 0;
@@ -99,26 +92,45 @@ char playerTurn(bool firstPlayerTurn)
     return c;
 }
 
-//Function to display winner
-bool showWinner(char arr[])
+//Function to determine winner
+char revealWinner(char arr[])
 {
-    bool winnerDeclared = false;
+    char winningChar;
+
+    //each conditional statement checks for a different winning scenario
+
+    //either column 0, row 0, or the diagonal from top left to bottom right have a winner
     if (
         (arr[0] == arr[1] && arr[0] == arr[2]) ||
         (arr[0] == arr[3] && arr[0] == arr[6]) ||
         (arr[0] == arr[4] && arr[0] == arr[8])
         )
     {
-        if (arr[0] == 'X')
-        {
-            printf("Player 1 wins\n");
-            winnerDeclared = true;
-        }
-        else if (arr[0] == 'O')
-        {
-            printf("Player 2 wins");
-            winnerDeclared = true;
-        }
+        winningChar = arr[0];
     }
-    return winnerDeclared;
+    //the middle column has a winner
+    else if (arr[1] == arr[4] && arr[1] == arr[7])
+    {
+        winningChar = arr[1];
+    }
+    //either column 2, row 0, and the diagonal from top right to bottom left have a winner
+    else if (
+        (arr[2] == arr[1] && arr[2] == arr[0]) ||
+        (arr[2] == arr[4] && arr[2] == arr[6]) ||
+        (arr[2] == arr[5] && arr[2] == arr[8])
+        )
+    {
+        winningChar = arr[2];
+    }
+    //the middle row has a winner
+    else if (arr[3] == arr[4] && arr[3] == arr[5])
+    {
+        winningChar = arr[3];
+    }
+    //the bottom row has a winner
+    else if (arr[6] == arr[7] && arr[6] == arr[8])
+    {
+        winningChar = arr[6];
+    }
+    return winningChar;
 }
