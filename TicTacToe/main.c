@@ -8,6 +8,7 @@
 void displayBoard(char a[]);
 char playerTurn(bool trueOrfalse);
 char revealWinner(char arr[]);
+void alreadyTaken(char arr[], char c, int n);
 
 int main()
 {
@@ -15,7 +16,6 @@ int main()
     displayBoard(posArr);
     bool playerOneTurn = true;
     char ch;
-    //int arrLength = sizeof(posArr) / sizeof(posArr[0]);
 
     while(true)
     {
@@ -24,15 +24,7 @@ int main()
 
         ch = playerTurn(playerOneTurn);
         scanf("%d", &choice);
-        if (posArr[choice-1] != 'X' && posArr[choice-1] != 'O')
-            posArr[choice-1] = ch;
-        else
-        {
-            printf("Pick a different number.\n");
-            while (posArr[choice-1] == 'X' || posArr[choice-1] == 'O')
-                scanf("%d", &choice);
-            posArr[choice-1] = ch;
-        }
+        alreadyTaken(posArr, ch, choice);
         system("clear");
         displayBoard(posArr);
         playerOneTurn = !playerOneTurn;
@@ -133,4 +125,18 @@ char revealWinner(char arr[])
         winningChar = arr[6];
     }
     return winningChar;
+}
+
+//Function to stop players from marking a spot that was already marked
+void alreadyTaken(char arr[], char ch, int choice)
+{
+    if (arr[choice-1] != 'X' && arr[choice-1] != 'O')
+            arr[choice-1] = ch;
+        else
+        {
+            printf("Pick a different number.\n");
+            while (arr[choice-1] == 'X' || arr[choice-1] == 'O')
+                scanf("%d", &choice);
+            arr[choice-1] = ch;
+        }
 }
