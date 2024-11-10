@@ -7,6 +7,7 @@
 
 void displayBoard(char a[]);
 char playerTurn(bool trueOrfalse);
+bool showWinner(char arr[]);
 
 int main()
 {
@@ -14,12 +15,12 @@ int main()
     displayBoard(posArr);
     bool playerOneTurn = true;
     char ch;
-    int arrLength = sizeof(posArr) / sizeof(posArr[0]);
+    //int arrLength = sizeof(posArr) / sizeof(posArr[0]);
 
     while(true)
     {
         int choice;
-        char c = 'X';
+        bool weHaveAWinner;
 
         ch = playerTurn(playerOneTurn);
         scanf("%d", &choice);
@@ -36,7 +37,10 @@ int main()
         displayBoard(posArr);
         playerOneTurn = !playerOneTurn;
 
-        if(
+        weHaveAWinner = showWinner(posArr);
+        if (weHaveAWinner)
+            break;
+        /*if(
             posArr[0] == posArr[1] && posArr[0] == posArr[2] ||
             posArr[3] == posArr[4] && posArr[3] == posArr[5] ||
             posArr[6] == posArr[7] && posArr[6] == posArr[8] ||
@@ -49,7 +53,7 @@ int main()
         {
             printf("Winner");
             break;
-        }
+        }*/
 
     }
 
@@ -93,4 +97,28 @@ char playerTurn(bool firstPlayerTurn)
         c = 'O';
     }
     return c;
+}
+
+//Function to display winner
+bool showWinner(char arr[])
+{
+    bool winnerDeclared = false;
+    if (
+        (arr[0] == arr[1] && arr[0] == arr[2]) ||
+        (arr[0] == arr[3] && arr[0] == arr[6]) ||
+        (arr[0] == arr[4] && arr[0] == arr[8])
+        )
+    {
+        if (arr[0] == 'X')
+        {
+            printf("Player 1 wins\n");
+            winnerDeclared = true;
+        }
+        else if (arr[0] == 'O')
+        {
+            printf("Player 2 wins");
+            winnerDeclared = true;
+        }
+    }
+    return winnerDeclared;
 }
